@@ -1,0 +1,151 @@
+{
+  "total_turns": 79,
+  "doc_queries": 7,
+  "excel_queries": 31,
+  "both_queries": 10,
+  "unknown_responses": 0,
+  "clarifications_asked": 11,
+  "safety_refusals": 1,
+  "sessions": {
+    "386ff41a-a825-4173-b283-ac884a0c05c8": {
+      "start_time": "2025-12-18T12:43:39.792732",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T12:43:39.792735"
+    },
+    "6da222f3-4676-4343-a310-1d0944ccf265": {
+      "start_time": "2025-12-18T12:44:55.108428",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T12:44:55.108431"
+    },
+    "31b6dcf7-67dc-4fc4-b20c-5ae0c2cc3877": {
+      "start_time": "2025-12-18T12:46:50.969224",
+      "turn_count": 4,
+      "last_activity": "2025-12-18T12:47:45.213534"
+    },
+    "64e3b6c5-4efb-49b7-8065-d352ff775385": {
+      "start_time": "2025-12-18T13:04:21.021693",
+      "turn_count": 7,
+      "last_activity": "2025-12-18T13:06:50.631517"
+    },
+    "2ee8699b-4f2c-4769-aa33-ce005028daa2": {
+      "start_time": "2025-12-18T13:09:39.631611",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T13:09:39.631615"
+    },
+    "3d8092b4-1179-4009-b122-efe6993df9f1": {
+      "start_time": "2025-12-18T13:09:51.345955",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T13:09:51.345959"
+    },
+    "aa7af8f2-0409-44f6-9c76-23e84760c50c": {
+      "start_time": "2025-12-18T13:10:43.482069",
+      "turn_count": 8,
+      "last_activity": "2025-12-18T13:12:25.903588"
+    },
+    "426fa86b-5f48-4bf9-91c8-9dad89378e2b": {
+      "start_time": "2025-12-18T13:18:48.584603",
+      "turn_count": 4,
+      "last_activity": "2025-12-18T13:19:33.229131"
+    },
+    "bf6793c6-715e-4550-8a30-938ce4aba44f": {
+      "start_time": "2025-12-18T13:20:50.890796",
+      "turn_count": 2,
+      "last_activity": "2025-12-18T13:20:58.389426"
+    },
+    "010cae19-8290-42b4-889e-b4d2a3d6253d": {
+      "start_time": "2025-12-18T13:29:00.178849",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T13:29:00.178853"
+    },
+    "4f296ef7-a028-4483-a163-f278281fa7d8": {
+      "start_time": "2025-12-18T13:29:34.808989",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T13:29:34.808993"
+    },
+    "53a566b9-9154-4e84-9cce-56ff3afa4572": {
+      "start_time": "2025-12-18T13:33:05.117823",
+      "turn_count": 3,
+      "last_activity": "2025-12-18T13:33:31.809489"
+    },
+    "069c4915-2f5e-4b46-abd9-d605caa2eb90": {
+      "start_time": "2025-12-18T13:35:34.054786",
+      "turn_count": 2,
+      "last_activity": "2025-12-18T13:35:56.699930"
+    },
+    "abc7aa21-b34b-4e54-8b18-58311b6e4c41": {
+      "start_time": "2025-12-18T13:39:34.486430",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T13:39:34.486433"
+    },
+    "977dcb74-b671-466d-92ee-4a8d85dec73e": {
+      "start_time": "2025-12-18T13:42:38.520884",
+      "turn_count": 3,
+      "last_activity": "2025-12-18T13:43:56.643949"
+    },
+    "7e1fe105-6ee5-4f43-bf10-cee376be0d03": {
+      "start_time": "2025-12-18T13:48:18.944722",
+      "turn_count": 4,
+      "last_activity": "2025-12-18T13:48:54.816430"
+    },
+    "933dd9dd-5f14-4371-8a86-648635d39ed4": {
+      "start_time": "2025-12-18T13:49:09.861345",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T13:49:09.861349"
+    },
+    "966427ef-e2a7-451a-bb6b-3f0cdb63b6ef": {
+      "start_time": "2025-12-18T13:54:19.640379",
+      "turn_count": 2,
+      "last_activity": "2025-12-18T13:54:23.156566"
+    },
+    "b7f913c9-4869-4b0d-92c1-fe0123cac6d2": {
+      "start_time": "2025-12-18T13:56:40.778539",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T13:56:40.778542"
+    },
+    "f2cab8bd-1b4e-447a-bc8a-9a5a8f43628b": {
+      "start_time": "2025-12-18T21:42:12.869352",
+      "turn_count": 2,
+      "last_activity": "2025-12-18T21:42:29.710657"
+    },
+    "b35f370a-e28b-480c-ae11-ca444fc74d42": {
+      "start_time": "2025-12-18T21:51:51.029528",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T21:51:51.029535"
+    },
+    "e3934c43-fd01-4f97-bd8f-db5a3482113b": {
+      "start_time": "2025-12-18T21:51:58.440927",
+      "turn_count": 6,
+      "last_activity": "2025-12-18T21:56:35.409164"
+    },
+    "f3db104c-703a-40c0-b577-8e786096e021": {
+      "start_time": "2025-12-18T21:58:53.508465",
+      "turn_count": 2,
+      "last_activity": "2025-12-18T21:59:16.124814"
+    },
+    "5d84233b-f2df-415d-b38e-3e2745c13c16": {
+      "start_time": "2025-12-18T22:00:48.912221",
+      "turn_count": 1,
+      "last_activity": "2025-12-18T22:00:48.912229"
+    },
+    "06b6bc8a-5d7c-408b-9409-4ce02fcb1332": {
+      "start_time": "2025-12-18T22:03:44.826838",
+      "turn_count": 12,
+      "last_activity": "2025-12-18T22:07:41.426474"
+    },
+    "a86c5956-fbd0-4ada-b3af-5b880aeb9983": {
+      "start_time": "2025-12-18T22:07:53.139899",
+      "turn_count": 3,
+      "last_activity": "2025-12-18T22:09:11.105658"
+    },
+    "a1d24f8f-17a4-44d9-905e-68e63cecfad4": {
+      "start_time": "2025-12-18T22:42:36.350656",
+      "turn_count": 2,
+      "last_activity": "2025-12-18T23:02:25.980153"
+    },
+    "61dd04b0-38eb-48a7-9651-2f6ad4963d9b": {
+      "start_time": "2025-12-19T12:16:16.447625",
+      "turn_count": 2,
+      "last_activity": "2025-12-19T12:16:19.074896"
+    }
+  }
+}

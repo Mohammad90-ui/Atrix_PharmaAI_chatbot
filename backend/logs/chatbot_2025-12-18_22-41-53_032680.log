@@ -1,0 +1,4 @@
+2025-12-18T22:42:36.350685+0530 | INFO | Session: a1d24f8f-17a4-44d9-905e-68e63cecfad4 | User: How severe is the cardiotoxicity? | Source: Pharma_Clinical_Trial_AllDrugs.xlsx | Retrieved: 3 | Clarification: False | Unknown: False | Safety: False
+2025-12-18T23:02:25.980190+0530 | INFO | Session: a1d24f8f-17a4-44d9-905e-68e63cecfad4 | User: should i take trastuzumab with 200 dose? | Source: none | Retrieved: 3 | Clarification: False | Unknown: False | Safety: True
+2025-12-19T12:16:16.447862+0530 | INFO | Session: 61dd04b0-38eb-48a7-9651-2f6ad4963d9b | User: Tell me about XYZ-Drug dosing | Source: none | Retrieved: 0 | Clarification: True | Unknown: False | Safety: False
+2025-12-19T12:16:19.074925+0530 | INFO | Session: 61dd04b0-38eb-48a7-9651-2f6ad4963d9b | User: xyz | Source: none | Retrieved: 3 | Clarification: False | Unknown: False | Safety: False

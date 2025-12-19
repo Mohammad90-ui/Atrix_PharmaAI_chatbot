@@ -1,0 +1,3 @@
+2025-12-18T21:58:53.508526+0530 | INFO | Session: f3db104c-703a-40c0-b577-8e786096e021 | User: What are the common adverse events for Trastuzumab? | Source: none | Retrieved: 3 | Clarification: False | Unknown: False | Safety: False
+2025-12-18T21:59:16.124859+0530 | INFO | Session: f3db104c-703a-40c0-b577-8e786096e021 | User: How severe is the cardiotoxicity? | Source: none | Retrieved: 3 | Clarification: False | Unknown: False | Safety: False
+2025-12-18T22:00:48.912262+0530 | INFO | Session: 5d84233b-f2df-415d-b38e-3e2745c13c16 | User: How severe are Imatinib's hematological AEs? | Source: Pharma_Clinical_Trial_AllDrugs.xlsx | Retrieved: 3 | Clarification: False | Unknown: False | Safety: False
