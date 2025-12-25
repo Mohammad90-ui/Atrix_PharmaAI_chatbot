@@ -9,13 +9,21 @@ from typing import List, Dict, Tuple
 import re
 
 
+import os
+
 class Retriever:
     """Handles embedding generation and semantic search."""
     
     def __init__(self, model_name: str = 'BAAI/bge-small-en-v1.5'):
         """Initialize with a FastEmbed model (ONNX based, lightweight)."""
-        # FastEmbed handles model download automatically
-        self.model = TextEmbedding(model_name=model_name)
+        # FastEmbed handles model download
+        # For Vercel/Serverless, we must use /tmp for writing files
+        cache_dir = None
+        if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+            cache_dir = "/tmp/fastembed_cache"
+            os.makedirs(cache_dir, exist_ok=True)
+            
+        self.model = TextEmbedding(model_name=model_name, cache_dir=cache_dir)
         self.doc_embeddings = None
         self.excel_embeddings = None
         self.doc_chunks = []
