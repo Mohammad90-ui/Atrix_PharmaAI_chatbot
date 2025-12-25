@@ -3,7 +3,7 @@ Retrieval Module
 Implements semantic search using sentence transformers and FAISS.
 """
 from sentence_transformers import SentenceTransformer
-import faiss
+
 import numpy as np
 from typing import List, Dict, Tuple
 import re
@@ -15,31 +15,23 @@ class Retriever:
     def __init__(self, model_name: str = 'all-MiniLM-L6-v2'):
         """Initialize with a sentence transformer model."""
         self.model = SentenceTransformer(model_name)
-        self.doc_index = None
-        self.excel_index = None
+        self.doc_embeddings = None
+        self.excel_embeddings = None
         self.doc_chunks = []
         self.excel_chunks = []
         
     def build_index(self, doc_chunks: List[Dict], excel_chunks: List[Dict]):
-        """Build FAISS indices for both sources."""
+        """Build Numpy-based indices for both sources."""
         # Build doc index
         if doc_chunks:
             doc_texts = [chunk['content'] for chunk in doc_chunks]
-            doc_embeddings = self.model.encode(doc_texts, show_progress_bar=False)
-            
-            dimension = doc_embeddings.shape[1]
-            self.doc_index = faiss.IndexFlatL2(dimension)
-            self.doc_index.add(doc_embeddings.astype('float32'))
+            self.doc_embeddings = self.model.encode(doc_texts, show_progress_bar=False)
             self.doc_chunks = doc_chunks
         
         # Build excel index
         if excel_chunks:
             excel_texts = [chunk['content'] for chunk in excel_chunks]
-            excel_embeddings = self.model.encode(excel_texts, show_progress_bar=False)
-            
-            dimension = excel_embeddings.shape[1]
-            self.excel_index = faiss.IndexFlatL2(dimension)
-            self.excel_index.add(excel_embeddings.astype('float32'))
+            self.excel_embeddings = self.model.encode(excel_texts, show_progress_bar=False)
             self.excel_chunks = excel_chunks
     
     def classify_query(self, query: str) -> str:
@@ -113,31 +105,35 @@ class Retriever:
         source_preference: str = 'both'
     ) -> Tuple[List[Dict], List[Dict]]:
         """
-        Search for relevant chunks.
+        Search for relevant chunks using Numpy (L2 distance).
         Returns: (doc_results, excel_results)
         """
-        query_embedding = self.model.encode([query]).astype('float32')
+        query_embedding = self.model.encode([query])[0]
         
         doc_results = []
         excel_results = []
         
         # Search doc if needed
-        if source_preference in ['doc', 'both'] and self.doc_index:
-            distances, indices = self.doc_index.search(query_embedding, top_k)
-            for dist, idx in zip(distances[0], indices[0]):
-                if idx < len(self.doc_chunks):
-                    result = self.doc_chunks[idx].copy()
-                    result['score'] = float(dist)
-                    doc_results.append(result)
+        if source_preference in ['doc', 'both'] and self.doc_embeddings is not None and len(self.doc_embeddings) > 0:
+            # L2 Distance: sum((a-b)^2)
+            dists = np.sum((self.doc_embeddings - query_embedding)**2, axis=1)
+            # Get top k indices (smallest distance)
+            indices = np.argsort(dists)[:top_k]
+            
+            for idx in indices:
+                result = self.doc_chunks[idx].copy()
+                result['score'] = float(dists[idx])
+                doc_results.append(result)
         
         # Search excel if needed
-        if source_preference in ['excel', 'both'] and self.excel_index:
-            distances, indices = self.excel_index.search(query_embedding, top_k)
-            for dist, idx in zip(distances[0], indices[0]):
-                if idx < len(self.excel_chunks):
-                    result = self.excel_chunks[idx].copy()
-                    result['score'] = float(dist)
-                    excel_results.append(result)
+        if source_preference in ['excel', 'both'] and self.excel_embeddings is not None and len(self.excel_embeddings) > 0:
+            dists = np.sum((self.excel_embeddings - query_embedding)**2, axis=1)
+            indices = np.argsort(dists)[:top_k]
+            
+            for idx in indices:
+                result = self.excel_chunks[idx].copy()
+                result['score'] = float(dists[idx])
+                excel_results.append(result)
         
         return doc_results, excel_results
     
