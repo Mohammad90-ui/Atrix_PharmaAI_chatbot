@@ -43,6 +43,29 @@ class Retriever:
             excel_texts = [chunk['content'] for chunk in excel_chunks]
             self.excel_embeddings = np.array(list(self.model.embed(excel_texts)))
             self.excel_chunks = excel_chunks
+
+    def save_index(self, path: str):
+        """Save embeddings and chunks to disk."""
+        np.savez_compressed(
+            path,
+            doc_embeddings=self.doc_embeddings,
+            excel_embeddings=self.excel_embeddings,
+            doc_chunks=self.doc_chunks,  # Note: storing dicts in npz is not efficient, but works for small data
+            excel_chunks=self.excel_chunks
+        )
+
+    def load_index(self, path: str) -> bool:
+        """Load embeddings and chunks from disk."""
+        try:
+            data = np.load(path, allow_pickle=True)
+            self.doc_embeddings = data['doc_embeddings']
+            self.excel_embeddings = data['excel_embeddings']
+            self.doc_chunks = data['doc_chunks'].tolist()
+            self.excel_chunks = data['excel_chunks'].tolist()
+            return True
+        except Exception as e:
+            print(f"Failed to load index: {e}")
+            return False
     
     def classify_query(self, query: str) -> str:
         """Determine which source to prioritize based on query type."""

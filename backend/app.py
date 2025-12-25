@@ -35,16 +35,27 @@ async def lifespan(app: FastAPI):
     docx_path = base_path / "Pharma_Clinical_Trial_Notes.docx"
     
     # Load data
-    print("Loading data sources...")
+    # Load data
     data_loader = DataLoader(str(excel_path), str(docx_path))
-    excel_df, doc_chunks, excel_chunks = data_loader.load_all()
     
-    print(f"Loaded {len(doc_chunks)} doc chunks and {len(excel_chunks)} excel chunks")
-    
-    # Build retrieval index
-    print("Building retrieval indices...")
     retriever = Retriever()
-    retriever.build_index(doc_chunks, excel_chunks)
+    index_file = base_path / "index.npz"
+    index_loaded = False
+    
+    if index_file.exists():
+        print(f"Found cached index at {index_file}, loading...")
+        if retriever.load_index(str(index_file)):
+            print("Successfully loaded cached index.")
+            index_loaded = True
+            
+    if not index_loaded:
+        print("Loading data sources...")
+        excel_data, doc_chunks, excel_chunks = data_loader.load_all()
+        print(f"Loaded {len(doc_chunks)} doc chunks and {len(excel_chunks)} excel chunks")
+        
+        # Build retrieval index
+        print("Building retrieval indices...")
+        retriever.build_index(doc_chunks, excel_chunks)
     
     # Initialize chatbot engine
     chatbot_engine = ChatbotEngine()
