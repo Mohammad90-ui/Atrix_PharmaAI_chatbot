@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import './App.css';
 
-const API_URL = "http://localhost:8001";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001";
 
 function App() {
   const [sessionId, setSessionId] = useState('');
@@ -50,7 +50,7 @@ function App() {
 
   const fetchMetrics = async () => {
     try {
-      const res = await axios.get(`${API_URL}/metrics`);
+      const res = await axios.get(`${API_URL}/api/metrics`);
       setMetrics(res.data);
     } catch (err) {
       console.error("Failed to fetch metrics", err);
@@ -72,7 +72,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(`${API_URL}/chat`, {
+      const res = await axios.post(`${API_URL}/api/chat`, {
         session_id: sessionId,
         user_message: userMsg.content
       });
@@ -102,7 +102,7 @@ function App() {
 
   const resetChat = async () => {
     try {
-      await axios.post(`${API_URL}/reset_session?session_id=${sessionId}`);
+      await axios.post(`${API_URL}/api/reset_session?session_id=${sessionId}`);
       const newSessionId = crypto.randomUUID();
       setSessionId(newSessionId);
       setMessages([{

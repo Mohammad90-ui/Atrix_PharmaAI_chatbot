@@ -102,7 +102,7 @@ async def root():
     }
 
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """
     Main chat endpoint.
@@ -192,13 +192,13 @@ async def chat(request: ChatRequest):
     )
 
 
-@app.get("/metrics")
+@app.get("/api/metrics")
 async def get_metrics():
     """Get chatbot usage metrics."""
     return chat_logger.get_metrics_summary()
 
 
-@app.post("/reset_session")
+@app.post("/api/reset_session")
 async def reset_session(session_id: str):
     """Reset conversation history for a session."""
     if session_id in chatbot_engine.conversation_history:
