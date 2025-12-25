@@ -2,7 +2,7 @@
 Retrieval Module
 Implements semantic search using sentence transformers and FAISS.
 """
-from sentence_transformers import SentenceTransformer
+from fastembed import TextEmbedding
 
 import numpy as np
 from typing import List, Dict, Tuple
@@ -12,9 +12,10 @@ import re
 class Retriever:
     """Handles embedding generation and semantic search."""
     
-    def __init__(self, model_name: str = 'all-MiniLM-L6-v2'):
-        """Initialize with a sentence transformer model."""
-        self.model = SentenceTransformer(model_name)
+    def __init__(self, model_name: str = 'BAAI/bge-small-en-v1.5'):
+        """Initialize with a FastEmbed model (ONNX based, lightweight)."""
+        # FastEmbed handles model download automatically
+        self.model = TextEmbedding(model_name=model_name)
         self.doc_embeddings = None
         self.excel_embeddings = None
         self.doc_chunks = []
@@ -25,13 +26,14 @@ class Retriever:
         # Build doc index
         if doc_chunks:
             doc_texts = [chunk['content'] for chunk in doc_chunks]
-            self.doc_embeddings = self.model.encode(doc_texts, show_progress_bar=False)
+            # FastEmbed returns a generator, convert to numpy array
+            self.doc_embeddings = np.array(list(self.model.embed(doc_texts)))
             self.doc_chunks = doc_chunks
         
         # Build excel index
         if excel_chunks:
             excel_texts = [chunk['content'] for chunk in excel_chunks]
-            self.excel_embeddings = self.model.encode(excel_texts, show_progress_bar=False)
+            self.excel_embeddings = np.array(list(self.model.embed(excel_texts)))
             self.excel_chunks = excel_chunks
     
     def classify_query(self, query: str) -> str:
@@ -108,7 +110,7 @@ class Retriever:
         Search for relevant chunks using Numpy (L2 distance).
         Returns: (doc_results, excel_results)
         """
-        query_embedding = self.model.encode([query])[0]
+        query_embedding = list(self.model.embed([query]))[0]
         
         doc_results = []
         excel_results = []
