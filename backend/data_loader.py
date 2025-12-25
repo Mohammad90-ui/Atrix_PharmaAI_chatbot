@@ -2,9 +2,9 @@
 Data Loader Module
 Loads and processes both Excel and DOCX source files.
 """
-import pandas as pd
+import openpyxl
 from docx import Document
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Any
 import re
 
 
@@ -14,19 +14,31 @@ class DataLoader:
     def __init__(self, excel_path: str, docx_path: str):
         self.excel_path = excel_path
         self.docx_path = docx_path
-        self.excel_df = None
+        self.excel_data = [] # List of dicts
         self.doc_chunks = []
         
-    def load_excel(self) -> pd.DataFrame:
-        """Load Excel file and return as DataFrame."""
-        self.excel_df = pd.read_excel(self.excel_path)
+    def load_excel(self) -> List[Dict[str, Any]]:
+        """Load Excel file via OpenPyXL and return as list of dicts."""
+        wb = openpyxl.load_workbook(self.excel_path, data_only=True)
+        ws = wb.active
         
-        # Clean and standardize data
-        for col in self.excel_df.columns:
-            if self.excel_df[col].dtype == 'object':
-                self.excel_df[col] = self.excel_df[col].fillna('').astype(str).str.strip()
+        data = []
+        rows = list(ws.iter_rows(values_only=True))
         
-        return self.excel_df
+        if not rows:
+            return []
+            
+        headers = [str(h).strip() for h in rows[0]]
+        
+        for row in rows[1:]:
+            row_dict = {}
+            for h, v in zip(headers, row):
+                val = str(v).strip() if v is not None else ""
+                row_dict[h] = val
+            data.append(row_dict)
+            
+        self.excel_data = data
+        return self.excel_data
     
     def load_docx(self) -> List[Dict[str, str]]:
         """Load DOCX file and extract text chunks."""
@@ -69,6 +81,9 @@ class DataLoader:
         # Extract tables
         for table_idx, table in enumerate(doc.tables):
             # Get headers from first row
+            if not table.rows:
+                continue
+                
             headers = [cell.text.strip() for cell in table.rows[0].cells]
             
             # Process each row
@@ -97,15 +112,14 @@ class DataLoader:
     
     def get_excel_chunks(self) -> List[Dict[str, str]]:
         """Convert Excel rows to searchable text chunks."""
-        if self.excel_df is None:
+        if not self.excel_data:
             self.load_excel()
         
         chunks = []
-        for idx, row in self.excel_df.iterrows():
+        for idx, row in enumerate(self.excel_data):
             # Create a text representation of the row
             text_parts = []
-            for col in self.excel_df.columns:
-                value = row[col]
+            for col, value in row.items():
                 if value and str(value).strip():
                     text_parts.append(f"{col}: {value}")
             
@@ -113,16 +127,16 @@ class DataLoader:
                 'type': 'excel_row',
                 'row_index': idx,
                 'content': ' | '.join(text_parts),
-                'structured_data': row.to_dict(),
+                'structured_data': row,
                 'source': 'Pharma_Clinical_Trial_AllDrugs.xlsx'
             })
         
         return chunks
     
-    def load_all(self) -> Tuple[pd.DataFrame, List[Dict], List[Dict]]:
+    def load_all(self) -> Tuple[List[Dict], List[Dict], List[Dict]]:
         """Load all sources and return organized data."""
-        excel_df = self.load_excel()
+        excel_data = self.load_excel()
         doc_chunks = self.load_docx()
         excel_chunks = self.get_excel_chunks()
         
-        return excel_df, doc_chunks, excel_chunks
+        return excel_data, doc_chunks, excel_chunks

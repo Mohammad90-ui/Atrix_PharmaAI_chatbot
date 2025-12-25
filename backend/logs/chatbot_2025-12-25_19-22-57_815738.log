@@ -1,0 +1,2 @@
+2025-12-25T19:23:10.240055+0530 | INFO | Session: fd554dcc-011b-4147-b141-bf4489b36414 | User: What's the recommended dose for Metformin? | Source: Pharma_Clinical_Trial_AllDrugs.xlsx | Retrieved: 3 | Clarification: False | Unknown: False | Safety: False
+2025-12-25T19:23:17.839527+0530 | INFO | Session: c0cf52fe-3ead-48fe-a828-41cc222175b9 | User: What AEs are reported for Pembrolizumab in melanoma? | Source: Pharma_Clinical_Trial_AllDrugs.xlsx | Retrieved: 3 | Clarification: False | Unknown: False | Safety: False
